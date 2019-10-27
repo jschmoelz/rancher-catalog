@@ -1,0 +1,8 @@
+name: 'Nextcloud'
+description: |
+  The self-hosted productivity platform that keeps you in control.
+version: '17.0.0'
+category: 'Collaboration'
+maintainer: 'Johannes Schmölz'
+license: 'MIT License'
+projectURL: 'https://github.com/jschmoelz/rancher-catalog'
