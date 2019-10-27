@@ -1,0 +1,92 @@
+version: '2'
+
+volumes:
+
+  gitlab-config:
+    driver: '${VOLUME_DRIVER}'
+
+  gitlab-log:
+    driver: '${VOLUME_DRIVER}'
+
+  gitlab-data:
+    driver: '${VOLUME_DRIVER}'
+
+services:
+
+  gitlab:
+    image: 'gitlab/gitlab-ce:12.4.0-ce.0'
+    restart: 'always'
+    hostname: '${GITLAB_HOSTNAME}'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url '${URL_SCHEME}${GITLAB_HOSTNAME}'
+        nginx['listen_port'] = 80
+        nginx['listen_https'] = false
+        {{- if eq .Values.GITLAB_PAGES_ENABLED "true"}}
+        gitlab_pages['enable'] = true
+        gitlab_pages['inplace_chroot'] = true
+        pages_external_url '${URL_SCHEME}${PAGES_HOSTNAME}'
+        pages_nginx['listen_port'] = 80
+        pages_nginx['listen_https'] = false
+        {{- else}}
+        gitlab_pages['enable'] = false
+        {{- end}}
+        gitlab_rails['omniauth_enabled'] = false
+        {{- if eq .Values.GITLAB_REGISTRY_ENABLED "true"}}
+        registry['enable'] = true
+        registry_external_url '${URL_SCHEME}${REGISTRY_HOSTNAME}'
+        registry_nginx['listen_port'] = 80
+        registry_nginx['listen_https'] = false
+        {{- else}}
+        registry['enable'] = false
+        {{- end}}
+        {{- if eq .Values.MATTERMOST_ENABLED "true"}}
+        mattermost['enable'] = true
+        mattermost['team_site_name'] = "${MATTERMOST_TEAM_SITE_NAME}"
+        mattermost['env'] = { "MM_EMAILSETTINGS_ENABLESIGNUPWITHEMAIL" => false,
+                              "MM_EMAILSETTINGS_ENABLESIGNINWITHEMAIL" => false,
+                              "MM_EMAILSETTINGS_ENABLESIGNINWITHUSERNAME" => false }
+        mattermost['gitlab_auth_endpoint'] = "http://${GITLAB_HOSTNAME}/oauth/authorize"
+        mattermost['gitlab_token_endpoint'] = "http://${GITLAB_HOSTNAME}/oauth/token"
+        mattermost['gitlab_user_api_endpoint'] = "http://${GITLAB_HOSTNAME}/api/v4/user"
+        mattermost_external_url '${URL_SCHEME}${MATTERMOST_HOSTNAME}'
+        mattermost_nginx['listen_port'] = 80
+        mattermost_nginx['listen_https'] = false
+        {{- else}}
+        mattermost['enable'] = false
+        {{- end}}
+        {{- if eq .Values.INCOMING_EMAIL_ENABLED "true"}}
+        gitlab_rails['incoming_email_enabled'] = true
+        gitlab_rails['incoming_email_address'] = "${INCOMING_EMAIL_ADDRESS}"
+        gitlab_rails['incoming_email_email'] = "${INCOMING_EMAIL_EMAIL}"
+        gitlab_rails['incoming_email_password'] = "${INCOMING_EMAIL_PASSWORD}"
+        gitlab_rails['incoming_email_host'] = "${INCOMING_EMAIL_HOST}"
+        gitlab_rails['incoming_email_port'] = ${INCOMING_EMAIL_PORT}
+        gitlab_rails['incoming_email_ssl'] = ${INCOMING_EMAIL_SSL}
+        gitlab_rails['incoming_email_start_tls'] = ${INCOMING_EMAIL_START_TLS}
+        {{- else}}
+        gitlab_rails['incoming_email_enabled'] = false
+        {{- end}}
+        {{- if eq .Values.SMTP_ENABLE "true"}}
+        gitlab_rails['smtp_enable'] = true
+        gitlab_rails['smtp_address'] = "${SMTP_ADDRESS}"
+        gitlab_rails['smtp_port'] = ${SMTP_PORT}
+        gitlab_rails['smtp_user_name'] = "${SMTP_USER_NAME}"
+        gitlab_rails['smtp_password'] = "${SMTP_PASSWORD}"
+        gitlab_rails['smtp_domain'] = "${SMTP_DOMAIN}"
+        gitlab_rails['smtp_authentication'] = "${SMTP_AUTHENTICATION}"
+        gitlab_rails['smtp_enable_starttls_auto'] = ${SMTP_ENABLE_STARTTLS_AUTO}
+        gitlab_rails['gitlab_email_from'] = '${GITLAB_EMAIL_FROM}'
+        gitlab_rails['gitlab_email_reply_to'] = '${GITLAB_EMAIL_REPLY_TO}'
+        {{- else}}
+        gitlab_rails['smtp_enable'] = false
+        {{- end}}
+        gitlab_rails['gitlab_shell_ssh_port'] = ${SSH_PORT}
+    volumes:
+      - 'gitlab-config:/etc/gitlab'
+      - 'gitlab-log:/var/log/gitlab'
+      - 'gitlab-data:/var/opt/gitlab'
+    {{- if ne .Values.HOST_LABEL ""}}
+    labels:
+      io.rancher.scheduler.affinity:host_label: '${HOST_LABEL}'
+    {{- end}}
