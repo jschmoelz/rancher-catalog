@@ -46,6 +46,9 @@ services:
         mattermost['env'] = { "MM_EMAILSETTINGS_ENABLESIGNUPWITHEMAIL" => false,
                               "MM_EMAILSETTINGS_ENABLESIGNINWITHEMAIL" => false,
                               "MM_EMAILSETTINGS_ENABLESIGNINWITHUSERNAME" => false }
+        mattermost['gitlab_auth_endpoint'] = "http://${GITLAB_HOSTNAME}/oauth/authorize"
+        mattermost['gitlab_token_endpoint'] = "http://${GITLAB_HOSTNAME}/oauth/token"
+        mattermost['gitlab_user_api_endpoint'] = "http://${GITLAB_HOSTNAME}/api/v4/user"
         mattermost_external_url '${URL_SCHEME}${MATTERMOST_HOSTNAME}'
         mattermost_nginx['listen_port'] = 80
         mattermost_nginx['listen_https'] = false
