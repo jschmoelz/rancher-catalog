@@ -1,11 +1,11 @@
 .catalog:
 
   name: 'GitLab CE'
-  version: '12.4.0-ce.0-0'
+  version: '12.3.0-ce.0-0'
   description: |
     GitLab is a single application for the entire software development lifecycle.
     From project planning and source code management to CI/CD, monitoring, and security.
-  uuid: '6dacd7f0-f8cf-11e9-8f0b-362b9e155667'
+  uuid: '5becc534-de17-11e9-8a34-2a2ae2dbcce4'
   minimum_rancher_version: 'v1.6.26'
 
   questions:
