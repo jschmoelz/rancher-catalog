@@ -1,0 +1,34 @@
+.catalog:
+
+  name: 'Nextcloud'
+  version: '17.0.1-0'
+  description: |
+    The self-hosted productivity platform that keeps you in control.
+  uuid: '382a8f10-13bd-11ea-8d71-362b9e155667'
+  minimum_rancher_version: 'v1.6.26'
+
+  questions:
+
+    - variable: 'MYSQL_ROOT_PASSWORD'
+      label: 'MySQL root password'
+      description: |
+        The MySQL root password.
+      type: 'password'
+      default: ''
+      required: true
+    - variable: 'MYSQL_PASSWORD'
+      label: 'Database password'
+      description: |
+        The password of the Nextcloud database.
+      type: 'password'
+      default: ''
+      required: true
+    - variable: 'VOLUME_DRIVER'
+      label: 'Volume driver'
+      description: |
+        The Volume driver that is being used for persistent storage.
+      type: 'enum'
+      options:
+        - 'local'
+      default: 'local'
+      required: true
