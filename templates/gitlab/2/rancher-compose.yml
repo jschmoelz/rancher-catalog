@@ -1,0 +1,287 @@
+.catalog:
+
+  name: 'GitLab CE'
+  version: '12.5.0-ce.0-0'
+  description: |
+    GitLab is a single application for the entire software development lifecycle.
+    From project planning and source code management to CI/CD, monitoring, and security.
+  uuid: '25dc1cb7-f1eb-4e3a-aeda-11ee88120c87'
+  minimum_rancher_version: 'v1.6.26'
+
+  questions:
+
+    - variable: 'GITLAB_HOSTNAME'
+      label: 'GitLab hostname'
+      description: |
+        GitLab hostname without URL scheme (no http:// or https://).
+      type: 'string'
+      default: ''
+      required: true
+
+    - variable: 'URL_SCHEME'
+      label: 'URL scheme'
+      description: |
+        The URL scheme (http:// or https://) that will be used for all external URLs.
+      type: 'enum'
+      options:
+        - 'http://'
+        - 'https://'
+      default: 'https://'
+      required: true
+
+    - variable: 'SSH_PORT'
+      label: 'SSH port'
+      description: |
+        Port on which the SSH server is listening.
+      type: 'int'
+      default: 22
+      required: true
+
+    - variable: 'GITLAB_PAGES_ENABLED'
+      label: 'Enable GitLab Pages'
+      description: |
+        Enable GitLab Pages.
+      type: 'boolean'
+      default: false
+      required: true
+
+    - variable: 'PAGES_HOSTNAME'
+      label: 'Pages hostname'
+      description: |
+        Hostname of the Pages service without URL scheme (no http:// or https://).
+        This option is required if GitLab Pages is enabled.
+      type: 'string'
+      default: ''
+      required: false
+
+    - variable: 'GITLAB_REGISTRY_ENABLED'
+      label: 'Enable GitLab Registry'
+      description: |
+        Enable GitLab Registry.
+      type: 'boolean'
+      default: false
+      required: true
+
+    - variable: 'REGISTRY_HOSTNAME'
+      label: 'Registry hostname'
+      description: |
+        Hostname of the Registry service without URL scheme (no http:// or https://).
+        This option is required if the Registry service is enabled.
+      type: 'string'
+      default: ''
+      required: false
+
+    - variable: 'INCOMING_EMAIL_ENABLED'
+      label: 'Enable reply by email'
+      description: |
+        Allow users to comment on issues and merge requests by replying to notification emails.
+      type: 'boolean'
+      default: false
+      required: true
+
+    - variable: 'INCOMING_EMAIL_ADDRESS'
+      label: 'Incoming email address'
+      description: |
+        The email address including the '%{key}' placeholder that will be replaced to reference the item being replied to.
+        The placeholder can be omitted but if present, it must appear in the 'user' part of the address (before the '@'), e.g. gitlab-incoming+%{key}@example.com
+        This option is required if reply by email is enabled.
+      type: 'string'
+      default: ''
+      required: false
+
+    - variable: 'INCOMING_EMAIL_EMAIL'
+      label: 'Email account username'
+      description: |
+        With third party providers, this is usually the full email address.
+        With self-hosted email servers, this is usually the user part of the email address.
+        This option is required if reply by email is enabled.
+      type: 'string'
+      default: ''
+      required: false
+
+    - variable: 'INCOMING_EMAIL_PASSWORD'
+      label: 'Email account password'
+      description: |
+        The email account password.
+        This option is required if reply by email is enabled.
+      type: 'string'
+      default: ''
+      required: false
+
+    - variable: 'INCOMING_EMAIL_HOST'
+      label: 'IMAP host'
+      description: |
+        Address of the IMAP host.
+        This option is required if reply by email is enabled.
+      type: 'string'
+      default: ''
+      required: false
+
+    - variable: 'INCOMING_EMAIL_PORT'
+      label: 'IMAP port'
+      description: |
+        Port on which the IMAP host is listening.
+        This option is required if reply by email is enabled.
+      type: 'int'
+      default: 993
+      required: false
+
+    - variable: 'INCOMING_EMAIL_SSL'
+      label: 'Enable SSL'
+      description: |
+        Enable SSL.
+        This option is required if reply by email is enabled.
+      type: 'boolean'
+      default: true
+      required: false
+
+    - variable: 'INCOMING_EMAIL_START_TLS'
+      label: 'Use STARTTLS'
+      description: |
+        Use STARTTLS.
+        This option is required if reply by email is enabled.
+      type: 'boolean'
+      default: false
+      required: false
+
+    - variable: 'SMTP_ENABLE'
+      label: 'Enable SMTP'
+      description: |
+        Enable SMTP support for sending emails.
+      type: 'boolean'
+      default: true
+      required: true
+
+    - variable: 'SMTP_ADDRESS'
+      label: 'SMTP address'
+      description: |
+        Address of the SMTP server.
+        This option is required if SMTP is enabled.
+      type: 'string'
+      default: ''
+      required: false
+
+    - variable: 'SMTP_PORT'
+      label: 'SMTP port'
+      description: |
+        Port on which the SMTP server is listening.
+        This option is required if SMTP is enabled.
+      type: 'int'
+      default: 587
+      required: false
+
+    - variable: 'SMTP_USER_NAME'
+      label: 'SMTP user name'
+      description: |
+        SMTP user name.
+        This option is required if SMTP is enabled.
+      type: 'string'
+      default: ''
+      required: false
+
+    - variable: 'SMTP_PASSWORD'
+      label: 'SMTP password'
+      description: |
+        SMTP Password.
+        This option is required if SMTP is enabled.
+      type: 'string'
+      default: ''
+      required: false
+
+    - variable: 'SMTP_DOMAIN'
+      label: 'SMTP domain'
+      description: |
+        Usally this is the domain part of your email address. If gitlab-incoming@example.com is your email address, them example.com is the SMTP domain.
+        This option is required if SMTP is enabled.
+      type: 'string'
+      default: ''
+      required: false
+
+    - variable: 'SMTP_AUTHENTICATION'
+      label: 'SMTP authentication'
+      description: |
+        SMTP authentication type.
+        This option is required if SMTP is enabled.
+      type: 'string'
+      default: 'login'
+      required: false
+
+    - variable: 'SMTP_ENABLE_STARTTLS_AUTO'
+      label: 'Enable STARTTLS'
+      description: |
+        Enable STARTTLS.
+        This option is required if SMTP is enabled.
+      type: 'boolean'
+      default: true
+      required: false
+
+    - variable: 'GITLAB_EMAIL_FROM'
+      label: 'Email from'
+      description: |
+        The email address that is displayed as the sender, e.g. gitlab@example.com
+      type: 'string'
+      default: ''
+      required: false
+
+    - variable: 'GITLAB_EMAIL_REPLY_TO'
+      label: 'Email reply to'
+      description: |
+        The email address that will be used as the reply address, e.g. noreply@example.com
+      type: 'string'
+      default: ''
+      required: false
+
+    - variable: 'MATTERMOST_ENABLED'
+      label: 'Enable Mattermost'
+      description: |
+        Enable Mattermost that is bundled with GitLab.
+      type: 'boolean'
+      default: false
+      required: true
+
+    - variable: 'MATTERMOST_HOSTNAME'
+      label: 'Mattermost hostname'
+      description: |
+        Mattermost hostname without URL scheme (no http:// or https://).
+        This option is required if Mattermost is enabled.
+      type: 'string'
+      default: ''
+      required: false
+
+    - variable: 'MATTERMOST_TEAM_SITE_NAME'
+      label: 'Team site name'
+      description: |
+        Name of the team that will be shown on Mattermost's start page.
+        This option is required if Mattermost is enabled.
+      type: 'string'
+      default: ''
+      required: false
+
+    - variable: 'HOST_LABEL'
+      label: 'Host label'
+      description: |
+        Host label to apply, e.g. 'gitlab=true'
+      type: 'string'
+      default: ''
+      required: false
+
+    - variable: 'VOLUME_DRIVER'
+      label: 'Volume driver'
+      description: |
+        The Volume driver that is being used for persistent storage.
+      type: 'enum'
+      options:
+        - 'local'
+      default: 'local'
+      required: true
+
+gitlab:
+  scale: 1
+  retain_ip: true
+  health_check:
+    port: 80
+    interval: 30000
+    unhealthy_threshold: 3
+    strategy: 'recreate'
+    response_timeout: 3000
+    healthy_threshold: 2
