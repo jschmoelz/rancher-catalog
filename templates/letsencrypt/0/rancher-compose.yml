@@ -1,0 +1,114 @@
+.catalog:
+
+  name: "Let's Encrypt"
+  version: '1.0.0-0'
+  description: |
+    Let’s Encrypt is a free, automated, and open Certificate Authority.
+  uuid: 'd6e9f9d5-7cba-4443-8d9c-6df83a17c06b'
+  minimum_rancher_version: 'v1.6.26'
+
+  questions:
+
+    - variable: 'EULA'
+      label: "Let's Encrypt Subscriber Agreement"
+      description: |
+        You can find the Let's Encrypt Subscriber Agreement here:
+        https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf
+      type: 'enum'
+      options:
+        - 'Yes'
+        - 'No'
+      default: 'No'
+      required: true
+    - variable: 'API_VERSION'
+      label: "Let's Encrypt API Version"
+      description: |
+        Select the Let's Encrypt API endpoint used for issuing the certificate.
+      type: 'enum'
+      options:
+        - 'Production'
+      default: 'Production'
+      required: true
+    - variable: 'EMAIL'
+      label: 'Your email address'
+      description: |
+        The email address will be used to create your Let's Encrypt account.
+      type: 'string'
+      default: ''
+      required: true
+    - variable: 'CERT_NAME'
+      label: 'Certificate name'
+      description: |
+        The certificate will be available in Rancher with the selected name.
+      type: 'string'
+      default: ''
+      required: true
+    - variable: 'DOMAINS'
+      label: 'Domain names'
+      description: |
+        Comma delimited list of domains.
+        E.g: 'example.com, dev.example.com'
+      type: 'string'
+      default: ''
+      required: true
+    - variable: 'PUBLIC_KEY_TYPE'
+      label: 'Public key type'
+      description: |
+        Select one of the available key types.
+      type: 'enum'
+      options:
+        - 'RSA-2048'
+        - 'RSA-4096'
+        - 'RSA-8192'
+        - 'ECDSA-256'
+        - 'ECDSA-384'
+      default: 'RSA-4096'
+      required: true
+    - variable: 'RENEWAL_TIME'
+      label: 'Renewal Time of Day (00-23)'
+      description: |
+        Set the time of day (UTC in hours) at which certificate renewals should be run.
+      type: 'int'
+      default: 12
+      required: true
+    - variable: 'RENEWAL_PERIOD_DAYS'
+      label: 'Renewal period'
+      description: |
+        How many days before the end of the validity period should the certificate be renewed?
+      type: 'int'
+      default: 20
+      required: true
+    - variable: 'RUN_ONCE'
+      label: 'Run once'
+      description: |
+        Stop the service after creating or renewing the certificate instead of continously running and managing renewal.
+      type: 'boolean'
+      default: false
+      required: true
+    - variable: 'DNS_RESOLVERS'
+      label: 'DNS resolvers'
+      description: |
+        Comma delimited list of DNS resolvers.
+        If no DNS resolvers are configured, the ones in the host's /etc/resolv.conf are used.
+      type: 'string'
+      default: '1.1.1.1:53,1.0.0.1:53'
+      required: false
+    - variable: 'PROVIDER'
+      label: 'Domain validation method'
+      description: |
+        Select a DNS provider to use for domain validation.
+        At the moment only 'HTTP' is supported.
+      type: 'enum'
+      options:
+        - 'HTTP'
+      default: 'HTTP'
+      required: true
+    - variable: 'VOLUME_DRIVER'
+      label: 'Volume driver'
+      description: |
+        The Volume driver that is being used for persistent storage.
+      type: 'enum'
+      options:
+        - 'local'
+      default: 'local'
+      required: true

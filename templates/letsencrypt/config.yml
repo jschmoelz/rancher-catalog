@@ -1,0 +1,8 @@
+name: "Let's Encrypt"
+description: |
+  Let’s Encrypt is a free, automated, and open Certificate Authority.
+version: '1.0.0'
+category: 'Security'
+maintainer: 'Johannes Schmölz'
+license: 'MIT License'
+projectURL: 'https://github.com/jschmoelz/rancher-catalog'
