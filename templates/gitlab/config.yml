@@ -2,7 +2,7 @@ name: 'GitLab Community Edition'
 description: |
   GitLab is a single application for the entire software development lifecycle.
   From project planning and source code management to CI/CD, monitoring, and security.
-version: '13.0.14-ce.0'
+version: '13.4.4-ce.0'
 category: 'Version control'
 maintainer: 'Johannes Schmölz'
 license: 'MIT License'
