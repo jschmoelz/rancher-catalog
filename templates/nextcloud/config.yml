@@ -1,7 +1,7 @@
 name: 'Nextcloud'
 description: |
   The self-hosted productivity platform that keeps you in control.
-version: '18.0.10'
+version: '19.0.4'
 category: 'Collaboration'
 maintainer: 'Johannes Schmölz'
 license: 'MIT License'
